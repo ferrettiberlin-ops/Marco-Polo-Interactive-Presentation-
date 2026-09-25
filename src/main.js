@@ -57,6 +57,7 @@ let journeyMap
 let routeLayer
 let chapterMarkers = []
 let pinnedLayer
+let hasRenderedChapter = false
 
 const routeBounds = L.latLngBounds(chapters.map((chapter) => chapter.coordinates))
 
@@ -201,9 +202,10 @@ function updateCurrentChapter(index) {
     marker.setIcon(chapterIcon(chapters[markerIndex], markerIndex === activeChapter))
   })
 
-  if (journeyMap) {
+  if (journeyMap && hasRenderedChapter) {
     journeyMap.flyTo(chapter.coordinates, Math.max(journeyMap.getZoom(), 4), { duration: 0.7 })
   }
+  hasRenderedChapter = true
 
   const currentStop = document.querySelector('#current-stop-pill')
   if (currentStop) currentStop.textContent = `${chapter.number} · ${chapter.title}`
