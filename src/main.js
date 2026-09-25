@@ -154,7 +154,7 @@ function initializeMap() {
     opacity: 0.82,
     lineCap: 'round',
     lineJoin: 'round',
-  }).addTo(journeyMap).bringToBack()
+  }).addTo(journeyMap)
 
   chapterMarkers = chapters.map((chapter, index) => {
     const marker = L.marker(chapter.coordinates, { icon: chapterIcon(chapter, index === activeChapter) })
