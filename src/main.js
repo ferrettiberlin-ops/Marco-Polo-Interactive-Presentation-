@@ -128,6 +128,10 @@ function updateCurrentChapter(index) {
   const chapter = chapters[activeChapter]
 
   document.documentElement.style.setProperty('--active-pin', chapter.color)
+  const previousButton = document.querySelector('#previous-chapter')
+  if (previousButton) {
+    previousButton.disabled = false
+  }
   document.querySelector('#chapter-number').textContent = chapter.number
   document.querySelector('#story-index').textContent = `${chapter.number} / 04`
   document.querySelector('#story-date').textContent = `CHAPTER ${chapter.number} / ${chapter.date}`
@@ -262,6 +266,7 @@ function bindControls() {
     point.addEventListener('click', () => updateCurrentChapter(Number(point.dataset.index)))
   })
 
+  document.querySelector('#previous-chapter').addEventListener('click', () => updateCurrentChapter(activeChapter - 1))
   document.querySelector('#next-chapter').addEventListener('click', () => updateCurrentChapter(activeChapter + 1))
   document.querySelector('#zoom-in').addEventListener('click', () => {
     zoomLevel = Math.min(1.22, zoomLevel + 0.06)
@@ -345,7 +350,10 @@ function buildApp() {
             <h2 id="story-title">${chapters[activeChapter].title}</h2>
             <p id="story-place">${chapters[activeChapter].place} · ${chapters[activeChapter].region}</p>
             <p class="story-text" id="story-text">${chapters[activeChapter].text}</p>
-            <button class="next-button" id="next-chapter" type="button">Next chapter <span>→</span></button>
+            <div class="story-actions">
+              <button class="nav-button" id="previous-chapter" type="button"><span>←</span> Previous</button>
+              <button class="next-button" id="next-chapter" type="button">Next chapter <span>→</span></button>
+            </div>
           </article>
           <aside class="journey-side">
             <div class="journey-box">
