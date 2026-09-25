@@ -1,5 +1,7 @@
 import './style.css'
 import QRCode from 'qrcode'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 
 const chapters = [
   {
@@ -9,7 +11,7 @@ const chapters = [
     date: '1254',
     region: 'Mediterranean',
     text: 'A merchant family looks east, beyond the edge of every familiar chart.',
-    x: 17, y: 67,
+    coordinates: [45.44, 12.33],
     color: '#d96b38',
     glow: 'rgba(217, 107, 56, 0.18)',
   },
@@ -20,7 +22,7 @@ const chapters = [
     date: '1269',
     region: 'Levant',
     text: 'The first long crossing follows old trade routes through a changing world.',
-    x: 29, y: 57,
+    coordinates: [32.92, 35.08],
     color: '#7a8d6c',
     glow: 'rgba(122, 141, 108, 0.18)',
   },
@@ -31,7 +33,7 @@ const chapters = [
     date: '1271',
     region: 'Central Asia',
     text: 'Over passes and through deserts, the road narrows to a single thread.',
-    x: 53, y: 44,
+    coordinates: [36.76, 66.90],
     color: '#c58a2a',
     glow: 'rgba(197, 138, 42, 0.18)',
   },
@@ -42,7 +44,7 @@ const chapters = [
     date: '1275',
     region: 'Imperial China',
     text: 'At the end of the known world, a new empire opens its doors.',
-    x: 82, y: 27,
+    coordinates: [39.90, 116.40],
     color: '#3f7887',
     glow: 'rgba(63, 120, 135, 0.18)',
   },
@@ -50,8 +52,13 @@ const chapters = [
 
 const storageKey = 'marco-polo-pins'
 let activeChapter = 0
-let zoomLevel = 1
 let pinnedStops = loadPinnedStops()
+let journeyMap
+let routeLayer
+let chapterMarkers = []
+let pinnedLayer
+
+const routeBounds = L.latLngBounds(chapters.map((chapter) => chapter.coordinates))
 
 function loadPinnedStops() {
   try {
@@ -102,6 +109,55 @@ function toggleFullscreenMode() {
   }
 }
 
+function chapterIcon(chapter, isActive) {
+  return L.divIcon({
+    className: 'chapter-marker-wrapper',
+    html: `<span class="chapter-marker ${isActive ? 'is-active' : ''}" style="--marker-color:${chapter.color};--marker-glow:${chapter.glow}">${chapter.number}</span>`,
+    iconSize: [38, 38],
+    iconAnchor: [19, 19],
+  })
+}
+
+function initializeMap() {
+  journeyMap = L.map('map-canvas', {
+    zoomControl: false,
+    attributionControl: true,
+    scrollWheelZoom: true,
+  })
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors',
+  }).addTo(journeyMap)
+
+  routeLayer = L.polyline(chapters.map((chapter) => chapter.coordinates), {
+    color: '#d7a64a',
+    weight: 5,
+    opacity: 0.96,
+    dashArray: '12 9',
+    lineCap: 'round',
+    lineJoin: 'round',
+  }).addTo(journeyMap)
+
+  L.polyline(chapters.map((chapter) => chapter.coordinates), {
+    color: '#f5edda',
+    weight: 11,
+    opacity: 0.82,
+    lineCap: 'round',
+    lineJoin: 'round',
+  }).addTo(journeyMap).bringToBack()
+
+  chapterMarkers = chapters.map((chapter, index) => {
+    const marker = L.marker(chapter.coordinates, { icon: chapterIcon(chapter, index === activeChapter) })
+      .addTo(journeyMap)
+      .on('click', () => updateCurrentChapter(index))
+    return marker
+  })
+
+  pinnedLayer = L.layerGroup().addTo(journeyMap)
+  journeyMap.fitBounds(routeBounds, { padding: [55, 55] })
+}
+
 function renderTimeline() {
   const timeline = document.querySelector('#journey-timeline')
   if (!timeline) return
@@ -141,10 +197,13 @@ function updateCurrentChapter(index) {
   document.querySelector('#progress-bar').style.width = `${((activeChapter + 1) / chapters.length) * 100}%`
   document.querySelector('#current-stop').textContent = `${chapter.title} · ${chapter.place}`
 
-  document.querySelectorAll('.map-point').forEach((point, pointIndex) => {
-    point.classList.toggle('is-active', pointIndex === activeChapter)
-    point.style.setProperty('--pin-color', chapter.color)
+  chapterMarkers.forEach((marker, markerIndex) => {
+    marker.setIcon(chapterIcon(chapters[markerIndex], markerIndex === activeChapter))
   })
+
+  if (journeyMap) {
+    journeyMap.flyTo(chapter.coordinates, Math.max(journeyMap.getZoom(), 4), { duration: 0.7 })
+  }
 
   const currentStop = document.querySelector('#current-stop-pill')
   if (currentStop) currentStop.textContent = `${chapter.number} · ${chapter.title}`
@@ -182,24 +241,21 @@ function renderStops() {
 }
 
 function renderPinnedMapMarkers() {
-  const stage = document.querySelector('#map-stage')
-  if (!stage) return
-
-  const currentMarkers = stage.querySelectorAll('.marked-stop')
-  currentMarkers.forEach((marker) => marker.remove())
+  if (!pinnedLayer) return
+  pinnedLayer.clearLayers()
 
   pinnedStops.forEach((stop) => {
-    const marker = document.createElement('button')
-    marker.type = 'button'
-    marker.className = `marked-stop ${stop.chapter === activeChapter ? 'is-active' : ''}`
-    marker.style.left = `${chapters[stop.chapter].x}%`
-    marker.style.top = `${chapters[stop.chapter].y}%`
-    marker.style.setProperty('--marker-color', chapters[stop.chapter].color)
-    marker.setAttribute('aria-label', `${chapters[stop.chapter].title} marked stop`)
-    marker.dataset.stopIndex = String(stop.chapter)
-    marker.innerHTML = '<span></span>'
-    marker.addEventListener('click', () => updateCurrentChapter(stop.chapter))
-    stage.appendChild(marker)
+    const chapter = chapters[stop.chapter]
+    L.circleMarker(chapter.coordinates, {
+      radius: stop.chapter === activeChapter ? 13 : 9,
+      color: chapter.color,
+      weight: 3,
+      fillColor: chapter.color,
+      fillOpacity: 0.72,
+    })
+      .bindTooltip(`${chapter.number} · ${chapter.title}`, { direction: 'top', offset: [0, -8] })
+      .on('click', () => updateCurrentChapter(stop.chapter))
+      .addTo(pinnedLayer)
   })
 }
 
@@ -262,23 +318,16 @@ function toggleViewer() {
 }
 
 function bindControls() {
-  document.querySelectorAll('.map-point').forEach((point) => {
-    point.addEventListener('click', () => updateCurrentChapter(Number(point.dataset.index)))
-  })
-
   document.querySelector('#previous-chapter').addEventListener('click', () => updateCurrentChapter(activeChapter - 1))
   document.querySelector('#next-chapter').addEventListener('click', () => updateCurrentChapter(activeChapter + 1))
   document.querySelector('#zoom-in').addEventListener('click', () => {
-    zoomLevel = Math.min(1.22, zoomLevel + 0.06)
-    document.querySelector('#map-stage').style.setProperty('--zoom', zoomLevel)
+    journeyMap?.zoomIn()
   })
   document.querySelector('#zoom-out').addEventListener('click', () => {
-    zoomLevel = Math.max(0.88, zoomLevel - 0.06)
-    document.querySelector('#map-stage').style.setProperty('--zoom', zoomLevel)
+    journeyMap?.zoomOut()
   })
   document.querySelector('#reset-map').addEventListener('click', () => {
-    zoomLevel = 1
-    document.querySelector('#map-stage').style.setProperty('--zoom', zoomLevel)
+    journeyMap?.fitBounds(routeBounds, { padding: [55, 55] })
   })
 
   document.querySelector('#mark-stop').addEventListener('click', markCurrentStop)
@@ -328,18 +377,9 @@ function buildApp() {
         <section class="atlas-section" aria-label="Interactive route map">
           <div class="map-heading"><span>THE ROUTE EAST</span><span class="map-scale">A living map / 1254—1295</span></div>
           <div class="map-stage" id="map-stage">
-            <div class="world-map-surface" aria-hidden="true"></div>
-            <div class="map-grain"></div>
-            <div class="compass" aria-hidden="true"><span>N</span><div class="compass-ring"><b></b></div><small>orient</small></div>
-            <div class="map-label label-europe">EUROPA</div>
-            <div class="map-label label-asia">ASIA</div>
-            <div class="map-label label-desert">THE GREAT<br />DESERTS</div>
-            <div class="sea-label sea-west">MARE INTERNUM</div>
-            <div class="sea-label sea-east">OCEANUS<br />ORIENTALIS</div>
-            <svg class="route-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="route-shadow" d="M17,67 C23,64 24,57 29,57 C38,56 42,48 53,44 C63,40 71,29 82,27" /><path class="route-line" d="M17,67 C23,64 24,57 29,57 C38,56 42,48 53,44 C63,40 71,29 82,27" /></svg>
-            <div class="map-points">${chapters.map((chapter, index) => `<button class="map-point ${index === activeChapter ? 'is-active' : ''}" data-index="${index}" style="--pin-color:${chapter.color};--pin-glow:${chapter.glow};left:${chapter.x}%;top:${chapter.y}%" aria-label="${chapter.title}, ${chapter.place}"><span>${chapter.number}</span></button>`).join('')}</div>
+            <div id="map-canvas" aria-label="Real-world interactive Marco Polo route map"></div>
             <div class="map-controls" aria-label="Map controls"><button type="button" id="zoom-in" aria-label="Zoom in">+</button><button type="button" id="zoom-out" aria-label="Zoom out">−</button><button type="button" id="reset-map" aria-label="Reset map">⌂</button></div>
-            <div class="map-footer"><span>Our journey begins here</span><span>37° 58′ N &nbsp; 23° 43′ E</span></div>
+            <div class="map-footer"><span>Real-world route / OpenStreetMap</span><span>Venice → Khanbaliq</span></div>
           </div>
         </section>
 
@@ -396,7 +436,7 @@ function buildApp() {
   `
 
   renderStops()
-  renderPinnedMapMarkers()
+  initializeMap()
   renderTimeline()
   bindControls()
   updateCurrentChapter(activeChapter)

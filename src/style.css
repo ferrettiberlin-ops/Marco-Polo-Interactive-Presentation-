@@ -194,6 +194,53 @@ button { cursor: pointer; }
   isolation: isolate;
   border: 1px solid rgba(36, 49, 45, 0.12);
 }
+#map-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: #d7ddd8;
+}
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: #d7ddd8;
+  font-family: var(--mono);
+}
+.leaflet-tile {
+  filter: saturate(0.7) sepia(0.12) brightness(0.78) contrast(1.05);
+}
+.leaflet-control-attribution {
+  background: rgba(244, 240, 230, 0.78) !important;
+  color: var(--muted);
+  font-size: 9px;
+}
+.leaflet-control-attribution a { color: var(--ink); }
+.chapter-marker-wrapper {
+  background: transparent;
+  border: 0;
+}
+.chapter-marker {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--marker-color);
+  border-radius: 50%;
+  background: rgba(244, 240, 230, 0.9);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.36), 0 0 0 8px var(--marker-glow);
+  color: var(--marker-color);
+  font: 10px var(--mono);
+  transition: 0.25s ease;
+}
+.chapter-marker.is-active {
+  transform: scale(1.2);
+  background: var(--marker-color);
+  color: var(--paper);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.4), 0 0 0 10px var(--marker-glow);
+}
+.map-stage > .map-controls,
+.map-stage > .map-footer { z-index: 500; }
+.map-stage > .map-footer { pointer-events: none; }
 .world-map-surface {
   position: absolute;
   inset: 0;
