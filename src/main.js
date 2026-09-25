@@ -126,10 +126,18 @@ function initializeMap() {
     scrollWheelZoom: true,
   })
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  const fallbackTiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; OpenStreetMap contributors',
+  })
+  const primaryTiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19,
+    subdomains: 'abcd',
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
   }).addTo(journeyMap)
+  primaryTiles.on('tileerror', () => {
+    if (!journeyMap.hasLayer(fallbackTiles)) fallbackTiles.addTo(journeyMap)
+  })
 
   routeLayer = L.polyline(chapters.map((chapter) => chapter.coordinates), {
     color: '#d7a64a',
