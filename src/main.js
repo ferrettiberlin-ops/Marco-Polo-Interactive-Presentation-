@@ -116,6 +116,10 @@ function getChapterFromUrl() {
   return value - 1
 }
 
+function hasChapterInUrl() {
+  return new URLSearchParams(window.location.search).has('chapter')
+}
+
 function generateAudienceUrl(index = activeChapter) {
   const url = new URL(window.location.href)
   url.searchParams.set('chapter', String(index + 1))
@@ -358,6 +362,30 @@ function toggleViewer() {
   const modal = document.querySelector('#viewer-modal')
   if (!modal) return
   modal.classList.toggle('is-open')
+  modal.setAttribute('aria-hidden', String(!modal.classList.contains('is-open')))
+}
+
+function startJourney() {
+  const welcome = document.querySelector('#welcome-screen')
+  welcome?.classList.add('is-dismissed')
+  updateCurrentChapter(0)
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+function handleKeyboardNavigation(event) {
+  if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return
+  if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+    event.preventDefault()
+    updateCurrentChapter(activeChapter + 1)
+  } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+    event.preventDefault()
+    updateCurrentChapter(activeChapter - 1)
+  } else if (event.key === ' ' && !event.repeat) {
+    event.preventDefault()
+    toggleFullscreenMode()
+  } else if (event.key === 'Escape') {
+    document.querySelector('#viewer-modal')?.classList.remove('is-open')
+  }
 }
 
 function bindControls() {
@@ -378,7 +406,9 @@ function bindControls() {
   document.querySelector('#open-viewer').addEventListener('click', toggleViewer)
   document.querySelector('#close-viewer').addEventListener('click', toggleViewer)
   document.querySelector('#toggle-fullscreen').addEventListener('click', toggleFullscreenMode)
+  document.querySelector('#start-journey')?.addEventListener('click', startJourney)
   document.addEventListener('fullscreenchange', syncFullscreenButton)
+  document.addEventListener('keydown', handleKeyboardNavigation)
 }
 
 function buildApp() {
@@ -452,9 +482,31 @@ function buildApp() {
             </div>
           </aside>
         </section>
+
+        <section class="sources-section" aria-labelledby="sources-title">
+          <div>
+            <p class="kicker">Further reading</p>
+            <h2 id="sources-title">A route between history and memory.</h2>
+          </div>
+          <div class="sources-copy">
+            <p>This interactive follows Marco Polo’s eastbound route through the Tarim Basin, the Hexi Corridor, the Mongol steppe and the Yuan court.</p>
+            <p class="source-note">Primary reference: <cite>The Travels of Marco Polo</cite>. Place names and present-day locations are provided as historical context, not as a claim that every route detail is certain.</p>
+          </div>
+        </section>
       </main>
 
       <footer><span>© 2026 / The Long Way East</span><span>Built for curious travellers <b>✦</b></span></footer>
+    </div>
+
+    <div id="welcome-screen" class="welcome-screen ${hasChapterInUrl() ? 'is-dismissed' : ''}" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+      <div class="welcome-card">
+        <p class="kicker">An interactive historical journey</p>
+        <h2 id="welcome-title">The Long Way East</h2>
+        <p>Travel from Venice to Shangdu through six stops, following the landscapes, stories and imperial worlds Marco Polo encountered on the road.</p>
+        <div class="welcome-meta"><span>1271—1275</span><span>6 chapters</span><span>1 route east</span></div>
+        <button id="start-journey" class="welcome-button" type="button">Start the journey <span>→</span></button>
+        <small>Tip: use ← → to change chapters · Space for presentation mode</small>
+      </div>
     </div>
 
     <div id="viewer-modal" class="viewer-modal" aria-hidden="true">
