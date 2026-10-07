@@ -404,6 +404,21 @@ function startJourney() {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
+async function updateWelcomeQrCode() {
+  const canvas = document.querySelector('#welcome-qr-canvas')
+  if (!canvas) return
+
+  try {
+    await QRCode.toCanvas(canvas, new URL(window.location.href).toString(), {
+      width: 150,
+      margin: 1,
+      color: { dark: '#24312d', light: '#f4f0e6' },
+    })
+  } catch (error) {
+    console.error('Welcome QR code generation failed', error)
+  }
+}
+
 function handleKeyboardNavigation(event) {
   if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return
   if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
@@ -544,6 +559,10 @@ function buildApp() {
         <h2 id="welcome-title">The Long Way East</h2>
         <p>Travel from Venice to Shangdu through six stops, following the landscapes, stories and imperial worlds Marco Polo encountered on the road.</p>
         <div class="welcome-meta"><span>1271—1275</span><span>6 chapters</span><span>1 route east</span></div>
+        <div class="welcome-qr">
+          <canvas id="welcome-qr-canvas" aria-label="QR code for The Long Way East"></canvas>
+          <span>Scan to open the interactive map</span>
+        </div>
         <button id="start-journey" class="welcome-button" type="button">Start the journey <span>→</span></button>
         <small>Tip: use ← → to change chapters · Space for presentation mode</small>
       </div>
@@ -574,6 +593,7 @@ function buildApp() {
   initializeMap()
   renderTimeline()
   bindControls()
+  updateWelcomeQrCode()
   updateCurrentChapter(activeChapter)
   updateQrCode(generateAudienceUrl(activeChapter))
   syncFullscreenButton()
