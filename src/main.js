@@ -42,6 +42,7 @@ const chapters = [
     region: 'Hexi Corridor',
     text: [
       'Gateway oasis to Tangut',
+      'Today’s name: Dunhuang',
       'Located between the Taklamakan Desert, Gobi Desert, and Qilian Mountains in northwestern Gansu, China',
     ],
     quote: 'he comes to a city called Shazhou, which is subject to the Great Khan.',
