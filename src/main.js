@@ -36,7 +36,7 @@ const chapters = [
   },
   {
     number: '03',
-    title: 'Shazhou (沙州 / 敦煌 / Dunhuang)',
+    title: 'Shazhou (敦煌 / Dunhuang)',
     place: 'Dunhuang City, Jiuquan, Gansu, China',
     date: '1272',
     region: 'Hexi Corridor',
@@ -55,7 +55,7 @@ const chapters = [
   },
   {
     number: '04',
-    title: 'Ganzhou (甘州 / 张掖 / Zhangye)',
+    title: 'Ganzhou (张掖 / Zhangye)',
     place: 'Zhangye City, Ganzhou District, Gansu, China',
     date: '1272',
     region: 'Gansu Corridor',
@@ -85,7 +85,7 @@ const chapters = [
   },
   {
     number: '06',
-    title: 'Shangdu (上都 / Xanadu)',
+    title: 'Xanadu (上都 / Shangdu)',
     place: 'Yuan Shangdu site, Zhenglan Banner, Inner Mongolia, China',
     date: '1275',
     region: 'Yuan Summer Capital',
