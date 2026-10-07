@@ -11,6 +11,7 @@ const chapters = [
     date: '1271',
     region: 'Tarim Basin',
     text: 'Marco Polo reaches Khotan, the great oasis city on the southern Silk Road, where caravans and merchants gather in the desert edge.',
+    quote: 'The province of Khotan lies towards the east-north-east.',
     coordinates: [37.111, 79.9209],
     color: '#d96b38',
     glow: 'rgba(217, 107, 56, 0.18)',
@@ -22,6 +23,7 @@ const chapters = [
     date: '1271',
     region: 'Lop Desert',
     text: 'The route continues east toward the Lop region, where the ghostly lake and dry basin mark a harsh and unforgettable step on the journey.',
+    quote: 'Lop is a large city to the east-north-east.',
     coordinates: [40.5, 90.3],
     color: '#7a8d6c',
     glow: 'rgba(122, 141, 108, 0.18)',
@@ -33,6 +35,7 @@ const chapters = [
     date: '1272',
     region: 'Hexi Corridor',
     text: 'At Shazhou, the road reaches the gateway to China, where oasis cities and caravan routes turn toward the heart of the empire.',
+    quote: 'he comes to a city called Shazhou, which is subject to the Great Khan.',
     coordinates: [40.138, 94.663],
     color: '#c58a2a',
     glow: 'rgba(197, 138, 42, 0.18)',
@@ -44,6 +47,7 @@ const chapters = [
     date: '1272',
     region: 'Gansu Corridor',
     text: 'Ganzhou marks the continuation of the Hexi Corridor, where the Polos spent a full year on business. From here, Marco Polo’s narrative makes a major northward detour to Karakorum before turning east toward Shangdu.',
+    quote: 'Ganzhou is a very large and noble city in Tangut itself.',
     coordinates: [38.925, 100.45],
     color: '#3f7887',
     glow: 'rgba(63, 120, 135, 0.18)',
@@ -55,6 +59,7 @@ const chapters = [
     date: '1273',
     region: 'Mongol Steppe',
     text: 'The route now makes a dramatic northward narrative detour from the Hexi Corridor to Karakorum, the great Mongol heartland, before the journey turns east again toward Shangdu.',
+    quote: 'Karakorum is a city three miles in circumference.',
     coordinates: [47.210, 102.848],
     color: '#6387a8',
     glow: 'rgba(99, 135, 168, 0.18)',
@@ -72,6 +77,7 @@ const chapters = [
       'Marco Polo also describes white mares and a ritual using their milk',
       'Today: Site of Xanadu, Inner Mongolia, China',
     ],
+    quote: 'he comes to a city called Shangdu that was built by the Great Khan.',
     coordinates: [42.358, 116.185],
     color: '#9c5a7b',
     glow: 'rgba(156, 90, 123, 0.18)',
@@ -240,6 +246,8 @@ function updateCurrentChapter(index) {
   document.querySelector('#story-title').textContent = chapter.title
   document.querySelector('#story-place').textContent = `${chapter.place} · ${chapter.region}`
   document.querySelector('#story-text').innerHTML = storyTextMarkup(chapter.text)
+  document.querySelector('#route-quote').textContent = `“${chapter.quote}”`
+  document.querySelector('#route-quote-source').textContent = `— The Travels, ${chapter.title}`
   document.querySelector('#progress-bar').style.width = `${((activeChapter + 1) / chapters.length) * 100}%`
   document.querySelector('#current-stop').textContent = `${chapter.title} · ${chapter.place}`
 
@@ -477,8 +485,8 @@ function buildApp() {
             </div>
             <div class="quote">
               <span class="quote-mark">“</span>
-              <p>I have not told the half of what I saw.</p>
-              <small>— Marco Polo</small>
+              <p id="route-quote">${chapters[activeChapter].quote}</p>
+              <small id="route-quote-source">— The Travels, ${chapters[activeChapter].title}</small>
             </div>
           </aside>
         </section>

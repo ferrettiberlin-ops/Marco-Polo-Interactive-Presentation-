@@ -658,6 +658,7 @@ button { cursor: pointer; }
   margin: 0;
   font: italic 16px/1.7 var(--serif);
 }
+.quote p::first-letter { color: var(--rust); }
 .quote small {
   display: block;
   margin-top: 15px;
