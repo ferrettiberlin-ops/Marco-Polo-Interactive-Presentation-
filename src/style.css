@@ -692,6 +692,22 @@ button { cursor: pointer; }
   border-top: 1px solid var(--line);
   font-size: 11px;
 }
+.private-reference {
+  display: block;
+  width: 100%;
+  min-height: 150px;
+  margin-top: 8px;
+  padding: 11px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  background: rgba(244, 240, 230, 0.72);
+  color: var(--ink);
+  font: 13px/1.65 var(--serif);
+}
+.private-reference:focus {
+  outline: 1px solid var(--rust);
+  border-color: var(--rust);
+}
 
 .viewer-modal {
   position: fixed;
