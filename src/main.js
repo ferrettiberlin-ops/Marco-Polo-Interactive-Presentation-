@@ -12,6 +12,9 @@ const chapters = [
     region: 'Tarim Basin',
     text: 'Marco Polo reaches Khotan, the great oasis city on the southern Silk Road, where caravans and merchants gather in the desert edge.',
     quote: 'The province of Khotan lies towards the east-north-east.',
+    translation: '于阗省位于东北偏东方向。它隶属于大汗，城镇众多，棉花、亚麻、大麻和谷物生长丰富；当地人主要从事贸易和手工业，并不以武力为业。',
+    reference: 'The passage presents Khotan as a prosperous oasis province under the Great Khan, with vineyards, farms, orchards and active crafts.',
+    historicalNote: 'Khotan is generally identified with today’s Hotan in Xinjiang. The English wording is a brief quotation; the Chinese text is a presentation translation and summary.',
     coordinates: [37.111, 79.9209],
     color: '#d96b38',
     glow: 'rgba(217, 107, 56, 0.18)',
@@ -24,6 +27,9 @@ const chapters = [
     region: 'Lop Desert',
     text: 'The route continues east toward the Lop region, where the ghostly lake and dry basin mark a harsh and unforgettable step on the journey.',
     quote: 'Lop is a large city to the east-north-east.',
+    translation: '罗布是一座位于东北偏东方向的大城市，处在罗布大沙漠的入口。旅行者会在这里休整，并为自己和牲畜准备足够穿越沙漠的食物和水。',
+    reference: 'The account describes the desert as immense and barren, with scarce water and dangers that could separate travellers from their companions at night.',
+    historicalNote: 'The famous “desert spirits” episode belongs to this desert-crossing description. It is best read as Marco Polo’s travel narrative and warning story, not as a modern geographical claim.',
     coordinates: [40.5, 90.3],
     color: '#7a8d6c',
     glow: 'rgba(122, 141, 108, 0.18)',
@@ -36,6 +42,9 @@ const chapters = [
     region: 'Hexi Corridor',
     text: 'At Shazhou, the road reaches the gateway to China, where oasis cities and caravan routes turn toward the heart of the empire.',
     quote: 'he comes to a city called Shazhou, which is subject to the Great Khan.',
+    translation: '旅行者穿越沙漠三十天后，来到一座叫沙州的城市。这里隶属于大汗，位于唐古特地区；当地有不同信仰的人群，也有许多寺院和修道院。',
+    reference: 'Shazhou is described as a cultural meeting point: the text mentions local idol worshippers alongside Nestorian Christians and Muslims.',
+    historicalNote: 'Shazhou is commonly associated with Dunhuang, a major oasis and Buddhist-art centre at the western end of the Hexi Corridor.',
     coordinates: [40.138, 94.663],
     color: '#c58a2a',
     glow: 'rgba(197, 138, 42, 0.18)',
@@ -48,6 +57,9 @@ const chapters = [
     region: 'Gansu Corridor',
     text: 'Ganzhou marks the continuation of the Hexi Corridor, where the Polos spent a full year on business. From here, Marco Polo’s narrative makes a major northward detour to Karakorum before turning east toward Shangdu.',
     quote: 'Ganzhou is a very large and noble city in Tangut itself.',
+    translation: '甘州是唐古特境内一座非常大而重要的城市，也是整个地区的首府。书中提到尼科洛、马菲奥和马可曾在这里处理生意并停留一年。',
+    reference: 'The description highlights a large, multi-faith city with monasteries, churches and monumental gilded images, before the narrator moves on to other lands.',
+    historicalNote: 'Ganzhou is generally identified with Zhangye. In the book’s narrative, it is also the point from which the account moves north toward Karakorum and later returns to the eastbound story.',
     coordinates: [38.925, 100.45],
     color: '#3f7887',
     glow: 'rgba(63, 120, 135, 0.18)',
@@ -60,6 +72,9 @@ const chapters = [
     region: 'Mongol Steppe',
     text: 'The route now makes a dramatic northward narrative detour from the Hexi Corridor to Karakorum, the great Mongol heartland, before the journey turns east again toward Shangdu.',
     quote: 'Karakorum is a city three miles in circumference.',
+    translation: '哈拉和林是一座周长约三英里的城市，周围有用泥土建成的城墙，因为当地缺少石材。它曾是鞑靼人离开故乡后最早的重要都城。',
+    reference: 'The Karakorum section opens into a broader account of the Tartars: their origins, customs, conquests and expansion across the world.',
+    historicalNote: 'This is a narrative detour rather than a simple straight-line segment of the route. The presentation keeps it as a chapter so the audience can see the Mongol political world behind the journey.',
     coordinates: [47.210, 102.848],
     color: '#6387a8',
     glow: 'rgba(99, 135, 168, 0.18)',
@@ -78,6 +93,9 @@ const chapters = [
       'Today: Site of Xanadu, Inner Mongolia, China',
     ],
     quote: 'he comes to a city called Shangdu that was built by the Great Khan.',
+    translation: '旅行者从前一座城市出发三天后，来到大汗忽必烈建造的上都。书中描写了装饰华丽的大理石宫殿、围合着泉水、河流和草地的园林，以及中央一座可以拆卸和移动的芦苇／竹竿式宫殿。马可·波罗还记述了白色母马的乳汁和与皇族相关的仪式。',
+    reference: 'Shangdu is presented as an imperial summer residence: a monumental palace, a walled park and a portable cane palace at its centre.',
+    historicalNote: 'Shangdu is the historical site associated with Xanadu in Inner Mongolia. The “portable palace” wording is a concise interpretation of the cane-built structure described in the source.',
     coordinates: [42.358, 116.185],
     color: '#9c5a7b',
     glow: 'rgba(156, 90, 123, 0.18)',
@@ -248,6 +266,9 @@ function updateCurrentChapter(index) {
   document.querySelector('#story-text').innerHTML = storyTextMarkup(chapter.text)
   document.querySelector('#route-quote').textContent = chapter.quote
   document.querySelector('#route-quote-source').textContent = `— The Travels, ${chapter.title}`
+  document.querySelector('#reference-translation').textContent = chapter.translation
+  document.querySelector('#reference-summary').textContent = chapter.reference
+  document.querySelector('#historical-note').textContent = chapter.historicalNote
   document.querySelector('#progress-bar').style.width = `${((activeChapter + 1) / chapters.length) * 100}%`
   document.querySelector('#current-stop').textContent = `${chapter.title} · ${chapter.place}`
 
@@ -488,6 +509,14 @@ function buildApp() {
               <p id="route-quote">${chapters[activeChapter].quote}</p>
               <small id="route-quote-source">— The Travels, ${chapters[activeChapter].title}</small>
             </div>
+            <div class="reference-card" aria-labelledby="reference-title">
+              <p class="journey-label" id="reference-title">Audience reference</p>
+              <p class="reference-label">中文翻译 / Presentation translation</p>
+              <p id="reference-translation">${chapters[activeChapter].translation}</p>
+              <p class="reference-label">What the passage describes</p>
+              <p id="reference-summary">${chapters[activeChapter].reference}</p>
+              <p class="reference-note" id="historical-note">${chapters[activeChapter].historicalNote}</p>
+            </div>
           </aside>
         </section>
 
@@ -498,7 +527,7 @@ function buildApp() {
           </div>
           <div class="sources-copy">
             <p>This interactive follows Marco Polo’s eastbound route through the Tarim Basin, the Hexi Corridor, the Mongol steppe and the Yuan court.</p>
-            <p class="source-note">Primary reference: <cite>The Travels of Marco Polo</cite>. Place names and present-day locations are provided as historical context, not as a claim that every route detail is certain.</p>
+            <p class="source-note">Primary reference: Nigel Cliff’s 2015 translation of <cite>The Travels of Marco Polo</cite>. Each chapter provides a short quotation plus a presentation translation and summary, rather than reproducing the full copyrighted passage. Place names and present-day locations are historical context, not a claim that every route detail is certain.</p>
           </div>
         </section>
       </main>

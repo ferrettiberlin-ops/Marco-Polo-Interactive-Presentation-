@@ -18,3 +18,10 @@ npm run dev
 The workflow in `.github/workflows/deploy.yml` builds the Vite site and deploys `dist` automatically on every push to `main`.
 
 The site uses no runtime API, map provider, or hosted asset dependency. The map surface is intentionally a local visual placeholder for the real cartographic data and story content that will be added next.
+
+## Audience reference
+
+Each route chapter includes a brief quotation from Nigel Cliff's 2015 translation of
+*The Travels of Marco Polo*, followed by a presentation translation, a plain-language
+summary, and a historical note. The site intentionally does not reproduce complete
+copyrighted passages; use the supplied book or speaker notes for extended reading.
