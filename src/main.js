@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css'
 const chapters = [
   {
     number: '01',
-    title: 'Khotan (Hotan)',
+    title: 'Khotan (和田 / Hotan)',
     place: 'Hotan City, Hotan Prefecture, Xinjiang, China',
     date: '1271',
     region: 'Tarim Basin',
@@ -21,7 +21,7 @@ const chapters = [
   },
   {
     number: '02',
-    title: 'Lop (Lop Nor)',
+    title: 'Lop (罗布泊 / Lop Nor)',
     place: 'Lop Nor, northern Ruoqiang County, Xinjiang, China',
     date: '1271',
     region: 'Lop Desert',
@@ -36,7 +36,7 @@ const chapters = [
   },
   {
     number: '03',
-    title: 'Shazhou (Dunhuang)',
+    title: 'Shazhou (沙州 / 敦煌 / Dunhuang)',
     place: 'Dunhuang City, Jiuquan, Gansu, China',
     date: '1272',
     region: 'Hexi Corridor',
@@ -55,7 +55,7 @@ const chapters = [
   },
   {
     number: '04',
-    title: 'Ganzhou (Zhangye)',
+    title: 'Ganzhou (甘州 / 张掖 / Zhangye)',
     place: 'Zhangye City, Ganzhou District, Gansu, China',
     date: '1272',
     region: 'Gansu Corridor',
@@ -70,7 +70,7 @@ const chapters = [
   },
   {
     number: '05',
-    title: 'Karakorum (Kharkhorin)',
+    title: 'Karakorum (哈拉和林 / Kharkhorin)',
     place: 'Kharkhorin, Övörkhangai Province, Mongolia',
     date: '1273',
     region: 'Mongol Steppe',
@@ -85,7 +85,7 @@ const chapters = [
   },
   {
     number: '06',
-    title: 'Shangdu (Xanadu)',
+    title: 'Shangdu (上都 / Xanadu)',
     place: 'Yuan Shangdu site, Zhenglan Banner, Inner Mongolia, China',
     date: '1275',
     region: 'Yuan Summer Capital',
