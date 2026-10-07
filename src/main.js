@@ -40,7 +40,10 @@ const chapters = [
     place: 'Dunhuang City, Jiuquan, Gansu, China',
     date: '1272',
     region: 'Hexi Corridor',
-    text: 'At Shazhou, the road reaches the gateway to China, where oasis cities and caravan routes turn toward the heart of the empire.',
+    text: [
+      'Gateway oasis to Tangut',
+      'Located between the Taklamakan Desert, Gobi Desert, and Qilian Mountains in northwestern Gansu, China',
+    ],
     quote: 'he comes to a city called Shazhou, which is subject to the Great Khan.',
     translation: '旅行者穿越沙漠三十天后，来到一座叫沙州的城市。这里隶属于大汗，位于唐古特地区；当地有不同信仰的人群，也有许多寺院和修道院。',
     reference: 'Shazhou is described as a cultural meeting point: the text mentions local idol worshippers alongside Nestorian Christians and Muslims.',
