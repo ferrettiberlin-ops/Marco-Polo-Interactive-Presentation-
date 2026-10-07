@@ -483,6 +483,13 @@ button { cursor: pointer; }
   color: var(--muted);
   font: 15px/1.75 var(--sans);
 }
+.story-text ul {
+  margin: 0;
+  padding-left: 1.25em;
+}
+.story-text li + li {
+  margin-top: 8px;
+}
 .story-actions {
   display: flex;
   align-items: center;

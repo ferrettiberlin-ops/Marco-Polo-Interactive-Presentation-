@@ -65,7 +65,13 @@ const chapters = [
     place: 'Yuan Shangdu site, Zhenglan Banner, Inner Mongolia, China',
     date: '1275',
     region: 'Yuan Summer Capital',
-    text: 'Finally, the journey reaches Shangdu, the summer capital of the Yuan Empire, where imperial power and a vast eastern world converge.',
+    text: [
+      'Final destination of Marco Polo’s route',
+      'Imperial residence of Khubilai Khan',
+      'Famous for a movable cane palace',
+      'Marco Polo also describes white mares and a ritual using their milk',
+      'Today: Site of Xanadu, Inner Mongolia, China',
+    ],
     coordinates: [42.358, 116.185],
     color: '#9c5a7b',
     glow: 'rgba(156, 90, 123, 0.18)',
@@ -82,6 +88,13 @@ let pinnedLayer
 let hasRenderedChapter = false
 
 const routeBounds = L.latLngBounds(chapters.map((chapter) => chapter.coordinates))
+
+function storyTextMarkup(text) {
+  if (Array.isArray(text)) {
+    return `<ul>${text.map((item) => `<li>${item}</li>`).join('')}</ul>`
+  }
+  return text
+}
 
 function loadPinnedStops() {
   try {
@@ -222,7 +235,7 @@ function updateCurrentChapter(index) {
   document.querySelector('#story-date').textContent = `CHAPTER ${chapter.number} / ${chapter.date}`
   document.querySelector('#story-title').textContent = chapter.title
   document.querySelector('#story-place').textContent = `${chapter.place} · ${chapter.region}`
-  document.querySelector('#story-text').textContent = chapter.text
+  document.querySelector('#story-text').innerHTML = storyTextMarkup(chapter.text)
   document.querySelector('#progress-bar').style.width = `${((activeChapter + 1) / chapters.length) * 100}%`
   document.querySelector('#current-stop').textContent = `${chapter.title} · ${chapter.place}`
 
@@ -419,7 +432,7 @@ function buildApp() {
             <p class="kicker" id="story-date">CHAPTER ${chapters[activeChapter].number} / ${chapters[activeChapter].date}</p>
             <h2 id="story-title">${chapters[activeChapter].title}</h2>
             <p id="story-place">${chapters[activeChapter].place} · ${chapters[activeChapter].region}</p>
-            <p class="story-text" id="story-text">${chapters[activeChapter].text}</p>
+            <div class="story-text" id="story-text">${storyTextMarkup(chapters[activeChapter].text)}</div>
             <div class="story-actions">
               <button class="nav-button" id="previous-chapter" type="button"><span>←</span> Previous</button>
               <button class="next-button" id="next-chapter" type="button">Next chapter <span>→</span></button>
