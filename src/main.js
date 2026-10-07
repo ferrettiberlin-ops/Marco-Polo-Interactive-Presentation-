@@ -246,7 +246,7 @@ function updateCurrentChapter(index) {
   document.querySelector('#story-title').textContent = chapter.title
   document.querySelector('#story-place').textContent = `${chapter.place} · ${chapter.region}`
   document.querySelector('#story-text').innerHTML = storyTextMarkup(chapter.text)
-  document.querySelector('#route-quote').textContent = `“${chapter.quote}”`
+  document.querySelector('#route-quote').textContent = chapter.quote
   document.querySelector('#route-quote-source').textContent = `— The Travels, ${chapter.title}`
   document.querySelector('#progress-bar').style.width = `${((activeChapter + 1) / chapters.length) * 100}%`
   document.querySelector('#current-stop').textContent = `${chapter.title} · ${chapter.place}`
