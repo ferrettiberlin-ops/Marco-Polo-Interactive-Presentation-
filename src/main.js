@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css'
 const chapters = [
   {
     number: '01',
-    title: 'Khotan (Cotan)',
+    title: 'Khotan (Hotan)',
     place: 'Hotan City, Hotan Prefecture, Xinjiang, China',
     date: '1271',
     region: 'Tarim Basin',
@@ -21,7 +21,7 @@ const chapters = [
   },
   {
     number: '02',
-    title: 'Lop',
+    title: 'Lop (Lop Nor)',
     place: 'Lop Nor, northern Ruoqiang County, Xinjiang, China',
     date: '1271',
     region: 'Lop Desert',
@@ -36,7 +36,7 @@ const chapters = [
   },
   {
     number: '03',
-    title: 'Shazhou (Saciu)',
+    title: 'Shazhou (Dunhuang)',
     place: 'Dunhuang City, Jiuquan, Gansu, China',
     date: '1272',
     region: 'Hexi Corridor',
@@ -55,7 +55,7 @@ const chapters = [
   },
   {
     number: '04',
-    title: 'Ganzhou (Campcio)',
+    title: 'Ganzhou (Zhangye)',
     place: 'Zhangye City, Ganzhou District, Gansu, China',
     date: '1272',
     region: 'Gansu Corridor',
@@ -70,7 +70,7 @@ const chapters = [
   },
   {
     number: '05',
-    title: 'Karakorum',
+    title: 'Karakorum (Kharkhorin)',
     place: 'Kharkhorin, Övörkhangai Province, Mongolia',
     date: '1273',
     region: 'Mongol Steppe',
