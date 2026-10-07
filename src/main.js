@@ -6,47 +6,69 @@ import 'leaflet/dist/leaflet.css'
 const chapters = [
   {
     number: '01',
-    title: 'The lagoon',
-    place: 'Venice, Italy',
-    date: '1254',
-    region: 'Mediterranean',
-    text: 'A merchant family looks east, beyond the edge of every familiar chart.',
-    coordinates: [45.44, 12.33],
+    title: 'Khotan (Cotan)',
+    place: 'Hotan City, Hotan Prefecture, Xinjiang, China',
+    date: '1271',
+    region: 'Tarim Basin',
+    text: 'Marco Polo reaches Khotan, the great oasis city on the southern Silk Road, where caravans and merchants gather in the desert edge.',
+    coordinates: [37.111, 79.9209],
     color: '#d96b38',
     glow: 'rgba(217, 107, 56, 0.18)',
   },
   {
     number: '02',
-    title: 'The crossing',
-    place: 'Acre, Levant',
-    date: '1269',
-    region: 'Levant',
-    text: 'The first long crossing follows old trade routes through a changing world.',
-    coordinates: [32.92, 35.08],
+    title: 'Lop',
+    place: 'Lop Nor, northern Ruoqiang County, Xinjiang, China',
+    date: '1271',
+    region: 'Lop Desert',
+    text: 'The route continues east toward the Lop region, where the ghostly lake and dry basin mark a harsh and unforgettable step on the journey.',
+    coordinates: [40.5, 90.3],
     color: '#7a8d6c',
     glow: 'rgba(122, 141, 108, 0.18)',
   },
   {
     number: '03',
-    title: 'The high road',
-    place: 'Balkh, Afghanistan',
-    date: '1271',
-    region: 'Central Asia',
-    text: 'Over passes and through deserts, the road narrows to a single thread.',
-    coordinates: [36.76, 66.90],
+    title: 'Shazhou (Saciu)',
+    place: 'Dunhuang City, Jiuquan, Gansu, China',
+    date: '1272',
+    region: 'Hexi Corridor',
+    text: 'At Shazhou, the road reaches the gateway to China, where oasis cities and caravan routes turn toward the heart of the empire.',
+    coordinates: [40.138, 94.663],
     color: '#c58a2a',
     glow: 'rgba(197, 138, 42, 0.18)',
   },
   {
     number: '04',
-    title: 'The court',
-    place: 'Khanbaliq, China',
-    date: '1275',
-    region: 'Imperial China',
-    text: 'At the end of the known world, a new empire opens its doors.',
-    coordinates: [39.90, 116.40],
+    title: 'Ganzhou (Campçio)',
+    place: 'Zhangye City, Ganzhou District, Gansu, China',
+    date: '1272',
+    region: 'Gansu Corridor',
+    text: 'Ganzhou marks the continuation of the Hexi Corridor, linking the western routes to the central states of northern China.',
+    coordinates: [38.925, 100.45],
     color: '#3f7887',
     glow: 'rgba(63, 120, 135, 0.18)',
+  },
+  {
+    number: '05',
+    title: 'Karakorum',
+    place: 'Kharkhorin, Övörkhangai Province, Mongolia',
+    date: '1273',
+    region: 'Mongol Steppe',
+    text: 'From the corridors of China, the route turns north to Karakorum, the great Mongol heartland and a crucial imperial center.',
+    coordinates: [47.210, 102.848],
+    color: '#6387a8',
+    glow: 'rgba(99, 135, 168, 0.18)',
+  },
+  {
+    number: '06',
+    title: 'Shangdu (Xanadu)',
+    place: 'Yuan Shangdu site, Zhenglan Banner, Inner Mongolia, China',
+    date: '1275',
+    region: 'Yuan Summer Capital',
+    text: 'Finally, the journey reaches Shangdu, the summer capital of the Yuan Empire, where imperial power and a vast eastern world converge.',
+    coordinates: [42.358, 116.185],
+    color: '#9c5a7b',
+    glow: 'rgba(156, 90, 123, 0.18)',
   },
 ]
 
@@ -190,7 +212,7 @@ function updateCurrentChapter(index) {
     previousButton.disabled = false
   }
   document.querySelector('#chapter-number').textContent = chapter.number
-  document.querySelector('#story-index').textContent = `${chapter.number} / 04`
+  document.querySelector('#story-index').textContent = `${chapter.number} / ${String(chapters.length).padStart(2, '0')}`
   document.querySelector('#story-date').textContent = `CHAPTER ${chapter.number} / ${chapter.date}`
   document.querySelector('#story-title').textContent = chapter.title
   document.querySelector('#story-place').textContent = `${chapter.place} · ${chapter.region}`
@@ -381,12 +403,12 @@ function buildApp() {
           <div class="map-stage" id="map-stage">
             <div id="map-canvas" aria-label="Real-world interactive Marco Polo route map"></div>
             <div class="map-controls" aria-label="Map controls"><button type="button" id="zoom-in" aria-label="Zoom in">+</button><button type="button" id="zoom-out" aria-label="Zoom out">−</button><button type="button" id="reset-map" aria-label="Reset map">⌂</button></div>
-            <div class="map-footer"><span>Real-world route / OpenStreetMap</span><span>Venice → Khanbaliq</span></div>
+            <div class="map-footer"><span>Real-world route / OpenStreetMap</span><span>Khotan → Shangdu</span></div>
           </div>
         </section>
 
         <section class="story-section">
-          <div class="story-index"><span>NOW READING</span><strong id="story-index">${chapters[activeChapter].number} / 04</strong><div class="progress"><i id="progress-bar"></i></div></div>
+          <div class="story-index"><span>NOW READING</span><strong id="story-index">${chapters[activeChapter].number} / ${String(chapters.length).padStart(2, '0')}</strong><div class="progress"><i id="progress-bar"></i></div></div>
           <article class="story-card">
             <p class="kicker" id="story-date">CHAPTER ${chapters[activeChapter].number} / ${chapters[activeChapter].date}</p>
             <h2 id="story-title">${chapters[activeChapter].title}</h2>
