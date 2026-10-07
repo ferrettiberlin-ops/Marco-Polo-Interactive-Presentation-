@@ -534,12 +534,12 @@ function buildApp() {
               <p class="journey-label" id="reference-title">Audience reference</p>
               <p class="reference-label">中文翻译 / Presentation translation</p>
               <p id="reference-translation">${chapters[activeChapter].translation}</p>
-              <p class="reference-label">What the passage describes</p>
+              <p class="reference-label">English reference / passage summary</p>
               <p id="reference-summary">${chapters[activeChapter].reference}</p>
               <p class="reference-note" id="historical-note">${chapters[activeChapter].historicalNote}</p>
-              <label class="reference-label" for="private-reference">Private reference notes</label>
-              <textarea id="private-reference" class="private-reference" rows="8" placeholder="Paste your full source passage here. It stays only in this browser.">${privateNotes[activeChapter] || ''}</textarea>
-              <p class="reference-note">Private notes are stored locally in this browser and are not published to GitHub.</p>
+              <label class="reference-label" for="private-reference">Private English original / full passage</label>
+              <textarea id="private-reference" class="private-reference" rows="10" placeholder="Paste the full English passage here. It stays only in this browser.">${privateNotes[activeChapter] || ''}</textarea>
+              <p class="reference-note">This private English field is stored only in this browser and is not published to GitHub.</p>
             </div>
           </aside>
         </section>
