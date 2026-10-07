@@ -103,10 +103,8 @@ const chapters = [
 ]
 
 const storageKey = 'marco-polo-pins'
-const privateNotesKey = 'marco-polo-private-reference'
 let activeChapter = 0
 let pinnedStops = loadPinnedStops()
-let privateNotes = loadPrivateNotes()
 let journeyMap
 let routeLayer
 let chapterMarkers = []
@@ -133,20 +131,6 @@ function loadPinnedStops() {
 
 function persistPinnedStops() {
   localStorage.setItem(storageKey, JSON.stringify(pinnedStops))
-}
-
-function loadPrivateNotes() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(privateNotesKey) || '{}')
-    return saved && typeof saved === 'object' ? saved : {}
-  } catch {
-    return {}
-  }
-}
-
-function savePrivateNote(chapterIndex, value) {
-  privateNotes[chapterIndex] = value
-  localStorage.setItem(privateNotesKey, JSON.stringify(privateNotes))
 }
 
 function getChapterFromUrl() {
@@ -285,8 +269,6 @@ function updateCurrentChapter(index) {
   document.querySelector('#reference-translation').textContent = chapter.translation
   document.querySelector('#reference-summary').textContent = chapter.reference
   document.querySelector('#historical-note').textContent = chapter.historicalNote
-  const privateReference = document.querySelector('#private-reference')
-  if (privateReference) privateReference.value = privateNotes[activeChapter] || ''
   document.querySelector('#progress-bar').style.width = `${((activeChapter + 1) / chapters.length) * 100}%`
   document.querySelector('#current-stop').textContent = `${chapter.title} · ${chapter.place}`
 
@@ -454,9 +436,6 @@ function bindControls() {
   document.querySelector('#close-viewer').addEventListener('click', toggleViewer)
   document.querySelector('#toggle-fullscreen').addEventListener('click', toggleFullscreenMode)
   document.querySelector('#start-journey')?.addEventListener('click', startJourney)
-  document.querySelector('#private-reference')?.addEventListener('input', (event) => {
-    savePrivateNote(activeChapter, event.target.value)
-  })
   document.addEventListener('fullscreenchange', syncFullscreenButton)
   document.addEventListener('keydown', handleKeyboardNavigation)
 }
@@ -537,9 +516,6 @@ function buildApp() {
               <p class="reference-label">English reference / passage summary</p>
               <p id="reference-summary">${chapters[activeChapter].reference}</p>
               <p class="reference-note" id="historical-note">${chapters[activeChapter].historicalNote}</p>
-              <label class="reference-label" for="private-reference">Private English original / full passage</label>
-              <textarea id="private-reference" class="private-reference" rows="10" placeholder="Paste the full English passage here. It stays only in this browser.">${privateNotes[activeChapter] || ''}</textarea>
-              <p class="reference-note">This private English field is stored only in this browser and is not published to GitHub.</p>
             </div>
           </aside>
         </section>
