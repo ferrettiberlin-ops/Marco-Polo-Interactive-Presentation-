@@ -39,11 +39,11 @@ const chapters = [
   },
   {
     number: '04',
-    title: 'Ganzhou (Campçio)',
+    title: 'Ganzhou (Campcio)',
     place: 'Zhangye City, Ganzhou District, Gansu, China',
     date: '1272',
     region: 'Gansu Corridor',
-    text: 'Ganzhou marks the continuation of the Hexi Corridor, linking the western routes to the central states of northern China.',
+    text: 'Ganzhou marks the continuation of the Hexi Corridor, where the Polos spent a full year on business. From here, Marco Polo’s narrative makes a major northward detour to Karakorum before turning east toward Shangdu.',
     coordinates: [38.925, 100.45],
     color: '#3f7887',
     glow: 'rgba(63, 120, 135, 0.18)',
@@ -54,7 +54,7 @@ const chapters = [
     place: 'Kharkhorin, Övörkhangai Province, Mongolia',
     date: '1273',
     region: 'Mongol Steppe',
-    text: 'From the corridors of China, the route turns north to Karakorum, the great Mongol heartland and a crucial imperial center.',
+    text: 'The route now makes a dramatic northward narrative detour from the Hexi Corridor to Karakorum, the great Mongol heartland, before the journey turns east again toward Shangdu.',
     coordinates: [47.210, 102.848],
     color: '#6387a8',
     glow: 'rgba(99, 135, 168, 0.18)',
@@ -148,9 +148,15 @@ function initializeMap() {
     scrollWheelZoom: true,
   })
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: 19,
-    attribution: '&copy; OpenStreetMap contributors',
+    attribution: 'Tiles &copy; Esri',
+  }).addTo(journeyMap)
+
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 19,
+    attribution: 'Labels &copy; Esri',
+    pane: 'overlayPane',
   }).addTo(journeyMap)
 
   routeLayer = L.polyline(chapters.map((chapter) => chapter.coordinates), {
@@ -381,7 +387,7 @@ function buildApp() {
         <section class="intro-grid">
           <div class="eyebrow">Chapter <span id="chapter-number">${chapters[activeChapter].number}</span> <i></i> ${chapters[activeChapter].date}</div>
           <div class="intro-copy">
-            <p class="kicker">A journey in four horizons</p>
+            <p class="kicker">A journey in six horizons</p>
             <h1>Beyond the edge<br /><em>of the map.</em></h1>
             <p class="lede">Follow the route together, pause on the places that matter, and keep the audience anchored to the story as you move across the world.</p>
           </div>
@@ -403,7 +409,7 @@ function buildApp() {
           <div class="map-stage" id="map-stage">
             <div id="map-canvas" aria-label="Real-world interactive Marco Polo route map"></div>
             <div class="map-controls" aria-label="Map controls"><button type="button" id="zoom-in" aria-label="Zoom in">+</button><button type="button" id="zoom-out" aria-label="Zoom out">−</button><button type="button" id="reset-map" aria-label="Reset map">⌂</button></div>
-            <div class="map-footer"><span>Real-world route / OpenStreetMap</span><span>Khotan → Shangdu</span></div>
+            <div class="map-footer"><span>Satellite imagery / Esri</span><span>Khotan → Shangdu</span></div>
           </div>
         </section>
 
@@ -428,8 +434,8 @@ function buildApp() {
             </div>
             <div class="quote">
               <span class="quote-mark">“</span>
-              <p>There is no telling where a road will lead until you take the first step.</p>
-              <small>— a route still being drawn</small>
+              <p>I have not told the half of what I saw.</p>
+              <small>— Marco Polo</small>
             </div>
           </aside>
         </section>
