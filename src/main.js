@@ -20,6 +20,8 @@ const chapters = [
     reference: 'The passage presents Khotan as a prosperous oasis province under the Great Khan, with vineyards, farms, orchards and active crafts.',
     historicalNote: 'Khotan is generally identified with today’s Hotan in Xinjiang. The English wording is a brief quotation; the Chinese text is a presentation translation and summary.',
     coordinates: [37.111, 79.9209],
+    x: 17,
+    y: 67,
     color: '#d96b38',
     glow: 'rgba(217, 107, 56, 0.18)',
   },
@@ -35,6 +37,8 @@ const chapters = [
     reference: 'The account describes the desert as immense and barren, with scarce water and dangers that could separate travellers from their companions at night.',
     historicalNote: 'The famous “desert spirits” episode belongs to this desert-crossing description. It is best read as Marco Polo’s travel narrative and warning story, not as a modern geographical claim.',
     coordinates: [40.5, 90.3],
+    x: 29,
+    y: 57,
     color: '#7a8d6c',
     glow: 'rgba(122, 141, 108, 0.18)',
   },
@@ -54,6 +58,8 @@ const chapters = [
     reference: 'Shazhou is described as a cultural meeting point: the text mentions local idol worshippers alongside Nestorian Christians and Muslims.',
     historicalNote: 'Shazhou is commonly associated with Dunhuang, a major oasis and Buddhist-art centre at the western end of the Hexi Corridor.',
     coordinates: [40.138, 94.663],
+    x: 38,
+    y: 56,
     color: '#c58a2a',
     glow: 'rgba(197, 138, 42, 0.18)',
   },
@@ -69,6 +75,8 @@ const chapters = [
     reference: 'The description highlights a large, multi-faith city with monasteries, churches and monumental gilded images, before the narrator moves on to other lands.',
     historicalNote: 'Ganzhou is generally identified with Zhangye. In the book’s narrative, it is also the point from which the account moves north toward Karakorum and later returns to the eastbound story.',
     coordinates: [38.925, 100.45],
+    x: 53,
+    y: 44,
     color: '#3f7887',
     glow: 'rgba(63, 120, 135, 0.18)',
   },
@@ -84,6 +92,8 @@ const chapters = [
     reference: 'The Karakorum section opens into a broader account of the Tartars: their origins, customs, conquests and expansion across the world.',
     historicalNote: 'This is a narrative detour rather than a simple straight-line segment of the route. The presentation keeps it as a chapter so the audience can see the Mongol political world behind the journey.',
     coordinates: [47.210, 102.848],
+    x: 63,
+    y: 40,
     color: '#6387a8',
     glow: 'rgba(99, 135, 168, 0.18)',
   },
@@ -105,6 +115,8 @@ const chapters = [
     reference: 'Shangdu is presented as an imperial summer residence: a monumental palace, a walled park and a portable cane palace at its centre.',
     historicalNote: 'Shangdu is the historical site associated with Xanadu in Inner Mongolia. The “portable palace” wording is a concise interpretation of the cane-built structure described in the source.',
     coordinates: [42.358, 116.185],
+    x: 82,
+    y: 27,
     color: '#9c5a7b',
     glow: 'rgba(156, 90, 123, 0.18)',
   },
@@ -291,6 +303,13 @@ function updateCurrentChapter(index) {
 
   const currentStop = document.querySelector('#current-stop-pill')
   if (currentStop) currentStop.textContent = `${chapter.number} · ${chapter.title}`
+  const viewerCurrent = document.querySelector('#viewer-current')
+  if (viewerCurrent) viewerCurrent.textContent = chapter.title
+  const viewerPoint = document.querySelector('#viewer-point')
+  if (viewerPoint) {
+    viewerPoint.style.left = `${chapter.x}%`
+    viewerPoint.style.top = `${chapter.y}%`
+  }
 
   const url = generateAudienceUrl(activeChapter)
   const href = document.querySelector('#share-link')
@@ -584,10 +603,10 @@ function buildApp() {
         </div>
         <div class="viewer-map">
           <div class="viewer-badge">Live stop</div>
-          <div class="viewer-current">${chapters[activeChapter].title}</div>
+          <div class="viewer-current" id="viewer-current">${chapters[activeChapter].title}</div>
           <div class="mini-map" aria-label="Current map focus">
             <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M17,67 C23,64 24,57 29,57 C38,56 42,48 53,44 C63,40 71,29 82,27" /></svg>
-            <button class="mini-point is-active" style="left:${chapters[activeChapter].x}%;top:${chapters[activeChapter].y}%" aria-label="Current stop"><span></span></button>
+            <button class="mini-point is-active" id="viewer-point" style="left:${chapters[activeChapter].x}%;top:${chapters[activeChapter].y}%" aria-label="Current stop"><span></span></button>
           </div>
         </div>
       </div>
