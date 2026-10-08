@@ -78,7 +78,7 @@ const chapters = [
     place: 'Kharkhorin, Övörkhangai Province, Mongolia',
     date: '1273',
     region: 'Mongol Steppe',
-    text: 'The route now makes a dramatic northward narrative detour from the Hexi Corridor to Karakorum, the great Mongol heartland, before the journey turns east again toward Shangdu.',
+    text: 'The city acts as a short-lived reference point for both Marco Polo and modern Mongolia. Its importance lies in its symbolic positioning as the first permanent Mongol capital, with future economic and political developments that could elevate it to its former prestige.',
     quote: 'Karakorum is a city three miles in circumference.',
     translation: '哈拉和林是一座周长约三英里的城市，周围有用泥土建成的城墙，因为当地缺少石材。它曾是鞑靼人离开故乡后最早的重要都城。',
     reference: 'The Karakorum section opens into a broader account of the Tartars: their origins, customs, conquests and expansion across the world.',
