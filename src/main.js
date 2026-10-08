@@ -31,7 +31,7 @@ const chapters = [
     place: 'Lop Nor, northern Ruoqiang County, Xinjiang, China',
     date: '1271',
     region: 'Lop Desert',
-    text: 'The route continues east toward the Lop region, where the ghostly lake and dry basin mark a harsh and unforgettable step on the journey.',
+    text: 'Lop is a settlement and caravan stopping point on Marco Polo’s route through the eastern Tarim Basin. It is usually identified with Lob, or Luobuzhuang, near modern Ruoqiang in southeastern Xinjiang. Located close to the Lop Desert and the Lop Nur basin, Lop stood at the edge of one of the most difficult desert crossings on the Silk Road. Travellers stopped there to rest, gather food and water, and prepare for the journey east toward Dunhuang.',
     quote: 'Lop is a large city to the east-north-east.',
     translation: '罗布是一座位于东北偏东方向的大城市，处在罗布大沙漠的入口。旅行者会在这里休整，并为自己和牲畜准备足够穿越沙漠的食物和水。',
     reference: 'The account describes the desert as immense and barren, with scarce water and dangers that could separate travellers from their companions at night.',
