@@ -10,7 +10,11 @@ const chapters = [
     place: 'Hotan City, Hotan Prefecture, Xinjiang, China',
     date: '1271',
     region: 'Tarim Basin',
-    text: 'Marco Polo reaches Khotan, the great oasis city on the southern Silk Road, where caravans and merchants gather in the desert edge.',
+    text: [
+      'Many names, one oasis.',
+      'Ancient Khotan’s oasis towns survive today as Hotan Prefecture in XinJiang.',
+      'For over three thousand years, the Chinese emperor’s seal was supposed to be made of jade not from China, not from India, but from Khotan.',
+    ],
     quote: 'The province of Khotan lies towards the east-north-east.',
     translation: '于阗省位于东北偏东方向。它隶属于大汗，城镇众多，棉花、亚麻、大麻和谷物生长丰富；当地人主要从事贸易和手工业，并不以武力为业。',
     reference: 'The passage presents Khotan as a prosperous oasis province under the Great Khan, with vineyards, farms, orchards and active crafts.',
